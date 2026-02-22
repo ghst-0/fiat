@@ -1,5 +1,5 @@
-const asyncAuto = require('async/auto');
-const {returnResult} = require('asyncjs-util');
+import asyncAuto from 'async/auto.js';
+import { returnResult } from 'asyncjs-util';
 
 const api = 'https://api.coindesk.com/v1/';
 const centsPerDollar = 100;
@@ -23,9 +23,9 @@ const remoteServiceTimeoutMs = 1000 * 30;
     date: <Updated At ISO 8601 Date String>
   }
 */
-module.exports = ({currency, date, fiat, request}, cbk) => {
+export default ({currency, date, fiat, request}, cbk) => {
   return new Promise((resolve, reject) => {
-    return asyncAuto({
+    asyncAuto({
       // Check arguments
       validate: cbk => {
         if (currency !== 'BTC') {
@@ -51,7 +51,7 @@ module.exports = ({currency, date, fiat, request}, cbk) => {
           url: `${api}${path}${fiat}${extension}`,
         },
         (err, r, body) => {
-          if (!!err) {
+          if (err) {
             return cbk([503, 'UnexpectedErrorGettingCoindeskPrice', {err}]);
           }
 

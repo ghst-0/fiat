@@ -1,3 +1,3 @@
-const getPrices = require('./get_prices');
+import getPrices from './get_prices.js';
 
-module.exports = {getPrices};
+export { getPrices };

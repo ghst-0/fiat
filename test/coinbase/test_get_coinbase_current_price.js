@@ -1,8 +1,7 @@
-const {deepStrictEqual} = require('node:assert').strict;
-const {rejects} = require('node:assert').strict;
-const test = require('node:test');
+import { deepStrictEqual, rejects } from 'node:assert/strict';
+import test from 'node:test';
 
-const {getCoinbaseCurrentPrice} = require('./../../coinbase');
+import { getCoinbaseCurrentPrice } from './../../coinbase/index.js';
 
 const makeRequest = (err, r, body) => ({}, cbk) => cbk(err, r, body);
 
@@ -13,7 +12,9 @@ const makeArgs = override => {
     request: makeRequest(null, {statusCode: 200}, {data: {amount: 1}}),
   };
 
-  Object.keys(override).forEach(key => args[key] = override[key]);
+  for (const key of Object.keys(override)) {
+    args[key] = override[key]
+  }
 
   return args;
 };
@@ -61,17 +62,15 @@ const tests = [
   },
 ];
 
-tests.forEach(({args, description, error, expected}) => {
-  return test(description, async () => {
-    if (!!error) {
+for (const { args, description, error, expected } of tests) {
+  test(description, async () => {
+    if (error) {
       await rejects(getCoinbaseCurrentPrice(args), error, 'Got error');
     } else {
-      const {cents, date} = await getCoinbaseCurrentPrice(args);
+      const { cents, date } = await getCoinbaseCurrentPrice(args);
 
       deepStrictEqual(cents, expected.cents, 'Got expected exchange rate');
       deepStrictEqual(!!date, true, 'Got a date value');
     }
-
-    return;
-  });
-});
+  })
+}

@@ -1,9 +1,8 @@
-const asyncAuto = require('async/auto');
-const {returnResult} = require('asyncjs-util');
+import asyncAuto from 'async/auto.js';
+import { returnResult } from 'asyncjs-util';
 
 const api = 'https://api.coingecko.com/api/v3/exchange_rates';
 const centsPerDollar = 100;
-const currency = 'BTC';
 const defaultFiat = 'USD';
 const {isArray} = Array;
 const remoteServiceTimeoutMs = 1000 * 30;
@@ -24,9 +23,9 @@ const remoteServiceTimeoutMs = 1000 * 30;
     }]
   }
 */
-module.exports = ({request, symbols}, cbk) => {
+export default ({request, symbols}, cbk) => {
   return new Promise((resolve, reject) => {
-    return asyncAuto({
+    asyncAuto({
       // Check arguments
       validate: cbk => {
         if (!request) {
@@ -42,7 +41,7 @@ module.exports = ({request, symbols}, cbk) => {
 
       // Fetch all the prices
       getPrices: ['validate', ({}, cbk) => {
-        if (!symbols.length) {
+        if (symbols.length === 0) {
           symbols.push(defaultFiat);
         }
 
@@ -54,7 +53,7 @@ module.exports = ({request, symbols}, cbk) => {
           url: api,
         },
         (err, r, json) => {
-          if (!!err) {
+          if (err) {
             return cbk([503, 'UnexpectedErrorGettingCoingeckoRates', {err}]);
           }
 
@@ -62,7 +61,7 @@ module.exports = ({request, symbols}, cbk) => {
             return cbk([503, 'ExpectedRatesInCoingeckoResponse']);
           }
 
-          if (!!symbols.find(code => !json.rates[code.toLowerCase()])) {
+          if (symbols.some(code => !json.rates[code.toLowerCase()])) {
             return cbk([404, 'CoingeckoRateLookupSymbolNotFound']);
           }
 

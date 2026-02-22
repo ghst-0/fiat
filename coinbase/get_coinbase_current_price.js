@@ -1,5 +1,5 @@
-const asyncAuto = require('async/auto');
-const {returnResult} = require('asyncjs-util');
+import asyncAuto from 'async/auto.js';
+import { returnResult } from 'asyncjs-util';
 
 const api = 'https://api.coinbase.com/';
 const centsPerUnit = 100;
@@ -20,9 +20,9 @@ const supportedFiats = ['EUR', 'USD'];
     date: <Updated At ISO 8601 Date String>
   }
 */
-module.exports = ({currency, fiat, request}, cbk) => {
+export default ({currency, fiat, request}, cbk) => {
   return new Promise((resolve, reject) => {
-    return asyncAuto({
+    asyncAuto({
       // Check arguments
       validate: cbk => {
         if (currency !== 'BTC') {
@@ -47,7 +47,7 @@ module.exports = ({currency, fiat, request}, cbk) => {
           url: `${api}v2/prices/${currency}-${fiat}/spot`,
         },
         (err, r, body) => {
-          if (!!err) {
+          if (err) {
             return cbk([503, 'UnexpectedErrorGettingCoinbasePrice', {err}]);
           }
 

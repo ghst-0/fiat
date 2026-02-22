@@ -1,3 +1,3 @@
-const {getPrices} = require('./rates');
+import { getPrices } from './rates/index.js';
 
-module.exports = {getPrices};
+export  { getPrices };

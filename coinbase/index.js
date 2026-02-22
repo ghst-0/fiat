@@ -1,3 +1,3 @@
-const getCoinbaseCurrentPrice = require('./get_coinbase_current_price');
+import getCoinbaseCurrentPrice from './get_coinbase_current_price.js';
 
-module.exports = {getCoinbaseCurrentPrice};
+export { getCoinbaseCurrentPrice };

@@ -1,10 +1,7 @@
-const {deepStrictEqual} = require('node:assert').strict;
-const {rejects} = require('node:assert').strict;
-const test = require('node:test');
+import { deepStrictEqual, rejects } from 'node:assert/strict';
+import test from 'node:test';
 
-const {getCoingeckoRates} = require('./../../coingecko');
-
-const updatedISO = '2020-01-13T20:13:00+00:00';
+import { getCoingeckoRates } from './../../coingecko/index.js';
 
 const body = {rates: {eur: {value: 1}, usd: {value: 2}}};
 
@@ -13,7 +10,9 @@ const makeRequest = (err, res) => ({}, cbk) => cbk(err, null, res);
 const makeArgs = override => {
   const args = {request: makeRequest(null, body), symbols: ['EUR']};
 
-  Object.keys(override).forEach(key => args[key] = override[key]);
+  for (const key of Object.keys(override)) {
+    args[key] = override[key]
+  }
 
   return args;
 };
@@ -73,9 +72,9 @@ const tests = [
   },
 ];
 
-tests.forEach(({args, description, error, expected}) => {
-  return test(description, async () => {
-    if (!!error) {
+for (const { args, description, error, expected } of tests) {
+  test(description, async () => {
+    if (error) {
       await rejects(getCoingeckoRates(args), error, 'Got expected error');
 
       return;
@@ -87,7 +86,5 @@ tests.forEach(({args, description, error, expected}) => {
     deepStrictEqual(!!ticker.date, true, 'Got ticker date');
     deepStrictEqual(ticker.rate, expectedTicker.rate, 'Got expected rate');
     deepStrictEqual(ticker.ticker, expectedTicker.ticker, 'Got symbol');
-
-    return;
-  });
-});
+  })
+}

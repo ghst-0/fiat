@@ -1,3 +1,3 @@
-const getCoingeckoRates = require('./get_coingecko_rates');
+import getCoingeckoRates from './get_coingecko_rates.js';
 
-module.exports = {getCoingeckoRates};
+export { getCoingeckoRates };

@@ -1,8 +1,7 @@
-const {deepStrictEqual} = require('node:assert').strict;
-const {rejects} = require('node:assert').strict;
-const test = require('node:test');
+import  { deepStrictEqual, rejects} from 'node:assert/strict';
+import test from 'node:test';
 
-const method = require('./../../rates/get_current_price');
+import method from './../../rates/get_current_price.js';
 
 const makeRequest = (err, r, body) => ({}, cbk) => cbk(err, r, body);
 const updatedISO = '2020-01-13T20:13:00+00:00';
@@ -19,7 +18,9 @@ const makeArgs = override => {
     )
   };
 
-  Object.keys(override).forEach(key => args[key] = override[key]);
+  for (const key of Object.keys(override)) {
+    args[key] = override[key]
+  }
 
   return args;
 };
@@ -57,18 +58,16 @@ const tests = [
   },
 ];
 
-tests.forEach(({args, description, error, expected}) => {
-  return test(description, async () => {
-    if (!!error) {
+for (const { args, description, error, expected } of tests) {
+  test(description, async () => {
+    if (error) {
       await rejects(method(args), error, 'Got expected error');
 
       return;
     }
 
-    const {cents} = await method(args);
+    const { cents } = await method(args);
 
     deepStrictEqual(cents, expected.cents, 'Got expected exchange rate');
-
-    return;
-  });
-});
+  })
+}

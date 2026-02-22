@@ -1,9 +1,9 @@
-const asyncAuto = require('async/auto');
-const asyncMap = require('async/map');
-const {returnResult} = require('asyncjs-util');
+import asyncAuto from 'async/auto.js';
+import asyncMap from 'async/map.js';
+import { returnResult } from 'asyncjs-util';
 
-const getCurrentPrice = require('./get_current_price');
-const {getCoingeckoRates} = require('./../coingecko');
+import getCurrentPrice from './get_current_price.js';
+import { getCoingeckoRates } from './../coingecko/index.js';
 
 const currency = 'BTC';
 const defaultFiat = 'USD';
@@ -27,9 +27,9 @@ const uniq = arr => Array.from(new Set(arr));
     }]
   }
 */
-module.exports = ({from, request, symbols}, cbk) => {
+export default ({from, request, symbols}, cbk) => {
   return new Promise((resolve, reject) => {
-    return asyncAuto({
+    asyncAuto({
       // Check arguments
       validate: cbk => {
         if (!from) {
@@ -51,9 +51,11 @@ module.exports = ({from, request, symbols}, cbk) => {
       priceSymbols: ['validate', ({}, cbk) => {
         const prices = [];
 
-        symbols.forEach(n => prices.push(n));
+        for (const n of symbols) {
+          prices.push(n)
+        }
 
-        if (!symbols.length) {
+        if (symbols.length === 0) {
           prices.push(defaultFiat);
         }
 
@@ -85,7 +87,7 @@ module.exports = ({from, request, symbols}, cbk) => {
             request,
           },
           (err, res) => {
-            if (!!err) {
+            if (err) {
               return cbk(err);
             }
 
@@ -102,7 +104,7 @@ module.exports = ({from, request, symbols}, cbk) => {
         ({getBatchPrices, getPrices}, cbk) =>
       {
         // Exit early when price fetching was batched
-        if (!!getBatchPrices) {
+        if (getBatchPrices) {
           return cbk(null, getBatchPrices);
         }
 

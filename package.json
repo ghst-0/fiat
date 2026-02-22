@@ -6,13 +6,14 @@
   "bugs": {
     "url": "https://github.com/alexbosworth/fiat/issues"
   },
+  "type": "module",
   "dependencies": {
-    "async": "3.2.4",
-    "asyncjs-util": "1.2.12"
+    "async": "3.2.6",
+    "asyncjs-util": "workspace*"
   },
   "description": "Fiat rates library",
   "engines": {
-    "node": ">=16"
+    "node": ">=20"
   },
   "keywords": [
     "currency",
@@ -26,7 +27,7 @@
     "url": "https://github.com/alexbosworth/fiat.git"
   },
   "scripts": {
-    "test": "npx nyc@15.1 node --experimental-test-coverage --test"
+    "test": "node --experimental-test-coverage --test"
   },
   "version": "2.0.0"
 }
