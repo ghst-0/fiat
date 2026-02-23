@@ -21,7 +21,7 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "name": "@alexbosworth/fiat",
+  "name": "fiat",
   "repository": {
     "type": "git",
     "url": "https://github.com/alexbosworth/fiat.git"
