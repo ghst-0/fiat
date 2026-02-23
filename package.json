@@ -9,7 +9,7 @@
   "type": "module",
   "dependencies": {
     "async": "3.2.6",
-    "asyncjs-util": "workspace*"
+    "asyncjs-util": "workspace:asyncjs-util"
   },
   "description": "Fiat rates library",
   "engines": {
