@@ -23,7 +23,7 @@ const remoteServiceTimeoutMs = 1000 * 30;
     }]
   }
 */
-export default ({request, symbols}, cbk) => {
+const getCoingeckoRates = ({request, symbols}, cbk) => {
   return new Promise((resolve, reject) => {
     asyncAuto({
       // Check arguments
@@ -87,3 +87,5 @@ export default ({request, symbols}, cbk) => {
     returnResult({reject, resolve, of: 'prices'}, cbk));
   });
 };
+
+export { getCoingeckoRates }

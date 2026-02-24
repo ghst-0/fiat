@@ -20,7 +20,7 @@ const supportedFiats = ['EUR', 'USD'];
     date: <Updated At ISO 8601 Date String>
   }
 */
-export default ({currency, fiat, request}, cbk) => {
+const getCoinbaseCurrentPrice = ({currency, fiat, request}, cbk) => {
   return new Promise((resolve, reject) => {
     asyncAuto({
       // Check arguments
@@ -65,3 +65,4 @@ export default ({currency, fiat, request}, cbk) => {
   });
 };
 
+export { getCoinbaseCurrentPrice }

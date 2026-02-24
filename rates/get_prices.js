@@ -2,8 +2,8 @@ import asyncAuto from 'async/auto.js';
 import asyncMap from 'async/map.js';
 import { returnResult } from 'asyncjs-util';
 
-import getCurrentPrice from './get_current_price.js';
-import { getCoingeckoRates } from './../coingecko/index.js';
+import { getCurrentPrice } from './get_current_price.js';
+import { getCoingeckoRates } from '../coingecko/get_coingecko_rates.js';
 
 const currency = 'BTC';
 const defaultFiat = 'USD';
@@ -27,7 +27,7 @@ const uniq = arr => Array.from(new Set(arr));
     }]
   }
 */
-export default ({from, request, symbols}, cbk) => {
+const getPrices = ({from, request, symbols}, cbk) => {
   return new Promise((resolve, reject) => {
     asyncAuto({
       // Check arguments
@@ -114,3 +114,5 @@ export default ({from, request, symbols}, cbk) => {
     returnResult({reject, resolve, of: 'prices'}, cbk));
   });
 };
+
+export { getPrices }

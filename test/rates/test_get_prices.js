@@ -1,7 +1,7 @@
 import { deepStrictEqual, rejects } from 'node:assert/strict';
 import test from 'node:test';
 
-import method from './../../rates/get_prices.js';
+import { getPrices } from '../../rates/get_prices.js';
 
 const makeRequest = (err, r, body) => ({}, cbk) => cbk(err, r, body);
 const updatedISO = '2020-01-13T20:13:00+00:00';
@@ -67,9 +67,9 @@ const tests = [
 for (const { args, description, error, expected } of tests) {
   test(description, async () => {
     if (error) {
-      await rejects(method(args), error, 'Got expected error');
+      await rejects(getPrices(args), error, 'Got expected error');
     } else {
-      const [{ rate }] = (await method(args)).tickers;
+      const [{ rate }] = (await getPrices(args)).tickers;
 
       deepStrictEqual(rate, expected.rate, 'Got expected exchange rate');
     }

@@ -1,3 +1,3 @@
-import { getPrices } from './rates/index.js';
+import { getPrices } from './rates/get_prices.js';
 
 export  { getPrices };

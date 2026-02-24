@@ -1,7 +1,7 @@
 import { deepStrictEqual, rejects } from 'node:assert/strict';
 import test from 'node:test';
 
-import { getCoingeckoRates } from './../../coingecko/index.js';
+import { getCoingeckoRates } from '../../coingecko/get_coingecko_rates.js';
 
 const body = {rates: {eur: {value: 1}, usd: {value: 2}}};
 

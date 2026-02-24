@@ -1,7 +1,7 @@
 import { deepStrictEqual, rejects } from 'node:assert/strict';
 import test from 'node:test';
 
-import { getCoindeskCurrentPrice } from './../../coindesk/index.js';
+import { getCoindeskCurrentPrice } from '../../coindesk/get_coindesk_current_price.js';
 
 const makeRequest = (err, r, body) => ({}, cbk) => cbk(err, r, body);
 const updatedISO = '2020-01-13T20:13:00+00:00';

@@ -1,7 +1,7 @@
 import { deepStrictEqual, rejects } from 'node:assert/strict';
 import test from 'node:test';
 
-import { getCoinbaseCurrentPrice } from './../../coinbase/index.js';
+import { getCoinbaseCurrentPrice } from '../../coinbase/get_coinbase_current_price.js';
 
 const makeRequest = (err, r, body) => ({}, cbk) => cbk(err, r, body);
 

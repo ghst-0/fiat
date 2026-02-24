@@ -1,8 +1,8 @@
 import asyncAuto from 'async/auto.js';
 import { returnResult } from 'asyncjs-util';
 
-import { getCoinbaseCurrentPrice } from './../coinbase/index.js';
-import { getCoindeskCurrentPrice } from './../coindesk/index.js';
+import { getCoinbaseCurrentPrice } from '../coinbase/get_coinbase_current_price.js';
+import { getCoindeskCurrentPrice } from '../coindesk/get_coindesk_current_price.js';
 
 /** Get the current fiat price from a specified rate provider
 
@@ -19,7 +19,7 @@ import { getCoindeskCurrentPrice } from './../coindesk/index.js';
     date: <Updated At ISO 8601 Date String>
   }
 */
-export default ({currency, fiat, from, request}, cbk) => {
+const getCurrentPrice = ({currency, fiat, from, request}, cbk) => {
   return new Promise((resolve, reject) => {
     asyncAuto({
       // Check arguments
@@ -60,3 +60,5 @@ export default ({currency, fiat, from, request}, cbk) => {
     returnResult({reject, resolve, of: 'getPrice'}, cbk));
   });
 };
+
+export { getCurrentPrice }
